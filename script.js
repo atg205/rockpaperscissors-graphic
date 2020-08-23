@@ -2,33 +2,68 @@ let gameElements = ["Rock", "Paper", "Scissor"];
 let playerWinCount = 0;
 let computerWinCount = 0;
 let scoreElement = document.getElementById("score");
+let imagesVisibile;
+
+let imagesOriginalClassList;
+let messageParagraph;
+
+let player1Panel = document.getElementById("player1");
+let player2Panel = document.getElementById("player2");
+
+let played = false;
+
 
 function getComputerPlay(){
-    return gameElements[Math.floor(Math.random() * gameElements.length)];
+    return Math.floor(Math.random() * gameElements.length);
 }
 
+function resetPage() {
+    if(played){
+        for(let i = 0; i < imagesOriginalClassList.length; i++){
+            imagesVisibile[i].className = imagesOriginalClassList[i];
+        }
+        messageParagraph.classList.add("no-visibility");
+        imagesVisibile[1].classList.remove("no-visibility");
+        
+        player1Panel.innerHTML = "Please choose one of the following:";
+        player2Panel.innerHTML = "&nbsp;";
+    }
+}
 
+function playRound(playerSelectionNumber, computerSelectionNumber) {
+    played = true;
+    let winnerMessage = "";
 
-function playRound(playerSelection, computerSelection) {
+    let playerSelection = gameElements[playerSelectionNumber];
+    let computerSelection = gameElements[computerSelectionNumber];
+
     let winnerNumber = checkWinner(playerSelection, computerSelection);
+
     if(winnerNumber === 0){
-        return "It's a tie!";
+        winnerMessage = "Tie";
     }
     
 
     if(winnerNumber === 1) {        
         playerWinCount++;
-        return `You won! ${playerSelection} beats ${computerSelection}`;
-    }
-    else {
-        computerWinCount++;
-        return `The Computer won! ${computerSelection} beats ${playerSelection}`;
+        winnerMessage = "beats";
     }
     
+    if(winnerNumber === 2) {
+        computerWinCount++;
+        winnerMessage = "is beaten by";
+    }
+
+    displayWinnerMessage(winnerMessage + "<br><br><br> (Press any key to continue)");
+
+    arrangeImages(playerSelectionNumber, computerSelectionNumber);
+    
+    document.addEventListener("keydown", function() { resetPage() } );
 } 
 
 function checkWinner(playerSelection, computerSelection){
     if(playerSelection === computerSelection){
+        console.log("Tie");
         return 0;
     }
     if(playerSelection === gameElements[0] && computerSelection === gameElements[1]){
@@ -44,19 +79,53 @@ function checkWinner(playerSelection, computerSelection){
 }
 
 function game(playerSelection){
-    console.log(playRound(gameElements[playerSelection], getComputerPlay()));
+    playRound(playerSelection, getComputerPlay());
 
-    displayWinnerMessage();
+    displayScore();
 }
 
 function resetGame(){
     playerWinCount = 0;
     computerWinCount = 0;
+    resetPage();
+    displayScore();
 }
 
-function displayWinnerMessage() {
-    let winner = (playerWinCount > computerWinCount) ? "You won. Congratulations!": 
-        (playerWinCount < computerWinCount) ? "The Computer won. Next time!": 
-        "It's a tie!";
+function displayScore() {
     scoreElement.innerHTML = `Score: You ${ playerWinCount }, Computer ${ computerWinCount }`;
 }
+
+function displayWinnerMessage(message) {
+    let image1 = document.getElementById("image1");
+    messageParagraph = document.getElementById("message-para");
+
+    image1.classList.add("no-visibility");
+    messageParagraph.innerHTML = message;
+    messageParagraph.classList.add("middle-panel");
+    messageParagraph.classList.remove("no-visibility");
+}
+
+function arrangeImages(playerSelection, computerSelection){
+    imagesVisibile = [];
+    imagesOriginalClassList = [];
+    for(let i = 0; i < 6; i++){
+        imagesVisibile[i] = document.getElementById("image" + i);
+        imagesOriginalClassList[i] = imagesVisibile[i].className;
+    }
+    imagesVisibile[0].classList.add("no-visibility");
+    imagesVisibile[2].classList.add("no-visibility");
+
+    
+
+    player1Panel.innerHTML = "Player 1 chose:";
+    player2Panel.innerHTML = "Computer chose:";
+    
+    if(playerSelection === computerSelection){
+        computerSelection += 3; 
+    }
+
+    imagesVisibile[playerSelection].className = 'left-panel fit';
+    imagesVisibile[computerSelection].className = 'right-panel fit';
+    
+}
+

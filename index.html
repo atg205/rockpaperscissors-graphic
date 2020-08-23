@@ -13,13 +13,28 @@
         <main>
             <div id="game">
                 <h1 class="header grid_center">Rock, Paper, Scissors!</h1>
-                <img src="images/sunset-1757593_640.jpg" onclick="game(0)" class="image1 fit" id="special">
-                <img src="images/toilet-paper-4974461_640.jpg" onclick="game(1)" class="image2 fit">
-                <img src="images/cord-4088057_640.jpg" onclick="game(2)" class="image3 fit">
-                <p id="score">Score: You 0, Computer 0 </p><button class="resetButton grid_center" onclick="resetGame()">New Game</button>
+                <p class="player1" id="player1">Please choose one of the following:</p>
+                <p class="player2" id="player2">&nbsp;</p>
+                <img src="images/sunset-1757593_640.jpg" onclick="game(0)" id="image0" class="left-panel fit">
+                <img src="images/toilet-paper-4974461_640.jpg" onclick="game(1)" id="image1" class="middle-panel fit">
+                <img src="images/cord-4088057_640.jpg" onclick="game(2)" id="image2" class="right-panel fit">
+                <p id="score">Score: You 0, Computer 0 </p><button class="resetButton grid_center" id="resetButton" onclick="resetGame()">New Game</button>
+                <p id="message-para" class="no-visibility"></p>
+
+                <img src="images/sunset-1757593_640.jpg" id="image3" class="no-visibility">
+                <img src="images/toilet-paper-4974461_640.jpg" id="image4" class="no-visibility">
+                <img src="images/cord-4088057_640.jpg" id="image5" class="no-visibility">
+            </div>
+
+            <div id="image-credits">
+                <p>Image credits to <a href="https://pixabay.com/users/suju-165106/">Suju</a>, <a href="https://pixabay.com/users/lyperzyt-12205564/">lyperzyt</a>
+                     and <a href="https://pixabay.com/users/gidonpico-850967/">GidonPico</a> from <a href="https://pixabay.com/">Pixabay</a></p>
+
             </div>
         </main>
         
         <script src="script.js"></script>
+
+
     </body>
 </html>
