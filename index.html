@@ -15,12 +15,15 @@
                 <h1 class="header grid_center">Rock, Paper, Scissors!</h1>
                 <p class="player1" id="player1">Please choose one of the following:</p>
                 <p class="player2" id="player2">&nbsp;</p>
+
                 <img src="images/sunset-1757593_640.jpg" id="image0" class="left-panel fit">
                 <img src="images/toilet-paper-4974461_640.jpg" id="image1" class="middle-panel fit">
                 <img src="images/cord-4088057_640.jpg" id="image2" class="right-panel fit">
+
                 <p id="score">Score: You 0, Computer 0 </p><button class="resetButton grid_center" id="resetButton" onclick="resetGame()">New Game</button>
                 <p id="message-para" class="no-visibility"></p>
 
+                <!-- needed in case of a tie, when the same image has to be displayed twice in grid-->
                 <img src="images/sunset-1757593_640.jpg" id="image3" class="no-visibility">
                 <img src="images/toilet-paper-4974461_640.jpg" id="image4" class="no-visibility">
                 <img src="images/cord-4088057_640.jpg" id="image5" class="no-visibility">
@@ -28,7 +31,7 @@
 
             <p id="helpMessage" class="no-visibility">I have not been able to remove the event listener from the images when the result is displayed. 
                 If you click on the left image, the game will go on. <br><br>
-                The "removeEventListener() function used in line 37 of my JS code apparently does not work. Any suggestions on GitHub are welcome! 
+                The "removeEventListener() function used in line 39 of my JS code apparently does not work. Any suggestions on GitHub are welcome! 
             </p>
 
 
