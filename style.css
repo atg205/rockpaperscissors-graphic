@@ -1,3 +1,21 @@
+body {
+    background-color: lightpink;
+}
+
+#helpMessage {
+    border: 10px solid red;
+}
+
+p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20;
+}
+
+#message-para {
+    font-weight: bold;
+    font-size: 30px;
+}
+
 .header { grid-area: header; }
 
 .left-panel { 
@@ -27,8 +45,10 @@
     grid-area: player2; 
 }
 
-#score {
+#score {;
     grid-area: score;
+    font-weight: bold;
+    font-size: 30px;
 }
 .resetButton{
     grid-area: resetButton;

@@ -12,6 +12,31 @@ let player2Panel = document.getElementById("player2");
 
 let played = false;
 
+function saveImageObjects() {
+    imagesVisibile = [];
+    imagesOriginalClassList = [];
+
+    for(let i = 0; i < 6; i++){
+        imagesVisibile[i] = document.getElementById("image" + i);
+        imagesOriginalClassList[i] = imagesVisibile[i].className;
+    }
+}
+
+function addEventListenerToImages(){
+    for(let i = 0; i < 3; i++){
+        imagesVisibile[i].addEventListener("click", function(){ game(i); });
+    }
+}
+
+function displayHelpMessage() {
+    document.getElementById("helpMessage").classList.remove("no-visibility");
+}
+
+function removeEventListenerFromImages(){
+    for(let i = 0; i < 3; i++){
+        imagesVisibile[i].removeEventListener("click", function(){ game(i); });
+    }
+}
 
 function getComputerPlay(){
     return Math.floor(Math.random() * gameElements.length);
@@ -58,7 +83,7 @@ function playRound(playerSelectionNumber, computerSelectionNumber) {
 
     arrangeImages(playerSelectionNumber, computerSelectionNumber);
     
-    document.addEventListener("keydown", function() { resetPage() } );
+    document.addEventListener("keydown", function() { resetPage(); } );
 } 
 
 function checkWinner(playerSelection, computerSelection){
@@ -79,8 +104,10 @@ function checkWinner(playerSelection, computerSelection){
 }
 
 function game(playerSelection){
+    console.log(playerSelection);
     playRound(playerSelection, getComputerPlay());
-
+    removeEventListenerFromImages();
+    displayHelpMessage();
     displayScore();
 }
 
@@ -106,12 +133,7 @@ function displayWinnerMessage(message) {
 }
 
 function arrangeImages(playerSelection, computerSelection){
-    imagesVisibile = [];
-    imagesOriginalClassList = [];
-    for(let i = 0; i < 6; i++){
-        imagesVisibile[i] = document.getElementById("image" + i);
-        imagesOriginalClassList[i] = imagesVisibile[i].className;
-    }
+    
     imagesVisibile[0].classList.add("no-visibility");
     imagesVisibile[2].classList.add("no-visibility");
 
@@ -129,3 +151,9 @@ function arrangeImages(playerSelection, computerSelection){
     
 }
 
+function initializeGame(){
+    saveImageObjects();
+    addEventListenerToImages();
+}
+
+initializeGame();

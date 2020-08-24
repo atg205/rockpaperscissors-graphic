@@ -15,9 +15,9 @@
                 <h1 class="header grid_center">Rock, Paper, Scissors!</h1>
                 <p class="player1" id="player1">Please choose one of the following:</p>
                 <p class="player2" id="player2">&nbsp;</p>
-                <img src="images/sunset-1757593_640.jpg" onclick="game(0)" id="image0" class="left-panel fit">
-                <img src="images/toilet-paper-4974461_640.jpg" onclick="game(1)" id="image1" class="middle-panel fit">
-                <img src="images/cord-4088057_640.jpg" onclick="game(2)" id="image2" class="right-panel fit">
+                <img src="images/sunset-1757593_640.jpg" id="image0" class="left-panel fit">
+                <img src="images/toilet-paper-4974461_640.jpg" id="image1" class="middle-panel fit">
+                <img src="images/cord-4088057_640.jpg" id="image2" class="right-panel fit">
                 <p id="score">Score: You 0, Computer 0 </p><button class="resetButton grid_center" id="resetButton" onclick="resetGame()">New Game</button>
                 <p id="message-para" class="no-visibility"></p>
 
@@ -26,11 +26,21 @@
                 <img src="images/cord-4088057_640.jpg" id="image5" class="no-visibility">
             </div>
 
+            <p id="helpMessage" class="no-visibility">I have not been able to remove the event listener from the images when the result is displayed. 
+                If you click on the left image, the game will go on. <br><br>
+                The "removeEventListener() function used in line 37 of my JS code apparently does not work. Any suggestions on GitHub are welcome! 
+            </p>
+
+
             <div id="image-credits">
-                <p>Image credits to <a href="https://pixabay.com/users/suju-165106/">Suju</a>, <a href="https://pixabay.com/users/lyperzyt-12205564/">lyperzyt</a>
+                <p><br><br>Image credits to <a href="https://pixabay.com/users/suju-165106/">Suju</a>, <a href="https://pixabay.com/users/lyperzyt-12205564/">lyperzyt</a>
                      and <a href="https://pixabay.com/users/gidonpico-850967/">GidonPico</a> from <a href="https://pixabay.com/">Pixabay</a></p>
 
             </div>
+
+           
+
+
         </main>
         
         <script src="script.js"></script>
