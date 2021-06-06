@@ -9,8 +9,20 @@ let messageParagraph;
 
 let player1Panel = document.getElementById("player1");
 let player2Panel = document.getElementById("player2");
+let resetButton = document.getElementById("resetButton");
 
 let played = false;
+
+resetButton.addEventListener('click', function() {
+	resetGame();
+})
+
+function resetGame(){
+    playerWinCount = 0;
+    computerWinCount = 0;
+    resetPage();
+    displayScore();
+}
 
 function initializeGame(){
     saveImageObjects(); //Saves all the image ids to an array
@@ -134,13 +146,6 @@ function resetPage() {
         player1Panel.innerHTML = "Please choose one of the following:";
         player2Panel.innerHTML = "&nbsp;";
     }
-}
-
-function resetGame(){
-    playerWinCount = 0;
-    computerWinCount = 0;
-    resetPage();
-    displayScore();
 }
 
 function displayScore() {
