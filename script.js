@@ -1,171 +1,156 @@
-let gameElements = ["Rock", "Paper", "Scissor"];
+const player1Panel = document.getElementById('player1');
+const player2Panel = document.getElementById('player2');
+const scoreElement = document.getElementById('score');
+const resetButton = document.getElementById('resetButton');
+const messageParagraph = document.getElementById('message-para');
+
+// options for the computer
+const gameElements = ['Rock', 'Paper', 'Scissor'];
+
+const imagesOriginalClassList = [];
+const imagesVisibile = [];
+
 let playerWinCount = 0;
 let computerWinCount = 0;
-let scoreElement = document.getElementById("score");
-let imagesVisibile;
-
-let imagesOriginalClassList;
-let messageParagraph;
-
-let player1Panel = document.getElementById("player1");
-let player2Panel = document.getElementById("player2");
 
 let played = false;
 
-function initializeGame(){
-    saveImageObjects(); //Saves all the image ids to an array
-    addEventListenerToImages();
+// called first to initialize the game
+function initializeGame() {
+	saveImageObjects(); // Saves all the image ids to an array
+	addEventListeners(); // Adds all required event listeners
 }
 
-function game(playerSelectionNumber){
-    let computerSelectionNumber = getComputerPlay();
-    let playerSelection = gameElements[playerSelectionNumber];
-    let computerSelection = gameElements[computerSelectionNumber];
-    displayWinnerMessage(getWinnerMessage(playerSelection, computerSelection) + "<br><br><br> (Press any key to continue)");
-    
+// main function called when option is clicked
+function game(playerSelectionNumber) {
+	played = true;
 
-    removeEventListenerFromImages();
-    displayHelpMessage();
-    displayScore();
+	const computerSelectionNumber = getComputerPlay();
+	const playerSelection = gameElements[playerSelectionNumber];
+	const computerSelection = gameElements[computerSelectionNumber];
 
-    arrangeImages(playerSelectionNumber, computerSelectionNumber);
-    
-    document.addEventListener("keydown", function() { resetPage(); } );
+	displayWinnerMessage(getWinnerMessage(playerSelection, computerSelection));
+	displayScore();
+
+	arrangeImages(playerSelectionNumber, computerSelectionNumber);
 }
 
-/*function removeEventListenerFromImages() not working! */
-function removeEventListenerFromImages(){
-    for(let i = 0; i < 3; i++){
-        imagesVisibile[i].removeEventListener("click", function(){ game(i); });
-    }
+function checkWinner(playerSelection, computerSelection) {
+	if(playerSelection === computerSelection) return 0;
+
+	if(playerSelection === gameElements[0] && computerSelection === gameElements[1]
+    || playerSelection === gameElements[1] && computerSelection === gameElements[2]
+    || playerSelection === gameElements[2] && computerSelection === gameElements[0]) {
+		return 2;
+	}
+
+	return 1;
 }
 
-function getComputerPlay(){
-    return Math.floor(Math.random() * gameElements.length);
+// restarts game
+function resetGame() {
+	played = false;
+	playerWinCount = 0;
+	computerWinCount = 0;
+
+	resetPage();
+	displayScore();
 }
 
-function displayWinnerMessage(message) {
-    let image1 = document.getElementById("image1");
-    messageParagraph = document.getElementById("message-para");
-
-    image1.classList.add("no-visibility");
-    messageParagraph.innerHTML = message;
-    messageParagraph.classList.add("middle-panel");
-    messageParagraph.classList.remove("no-visibility");
-}
-
-function getWinnerMessage(playerSelection, computerSelection) {
-    played = true;
-    let winnerMessage = "";
-
-    
-
-    let winnerNumber = checkWinner(playerSelection, computerSelection);
-
-    if(winnerNumber === 0){
-        winnerMessage = "Tie";
-    }
-    
-
-    if(winnerNumber === 1) {        
-        playerWinCount++;
-        winnerMessage = "beats";
-    }
-    
-    if(winnerNumber === 2) {
-        computerWinCount++;
-        winnerMessage = "is beaten by";
-    }
-
-    return winnerMessage;
- } 
-
- function checkWinner(playerSelection, computerSelection){
-    if(playerSelection === computerSelection){
-        console.log("Tie");
-        return 0;
-    }
-    if(playerSelection === gameElements[0] && computerSelection === gameElements[1]){
-        return 2;
-    }
-    if(playerSelection === gameElements[1] && computerSelection === gameElements[2]){
-        return 2;
-    }
-    if(playerSelection === gameElements[2] && computerSelection === gameElements[0]){
-        return 2;
-    }
-    return 1;
-}
-
-
-
-function saveImageObjects() {
-    imagesVisibile = [];
-    imagesOriginalClassList = [];
-
-    for(let i = 0; i < 6; i++){
-        imagesVisibile[i] = document.getElementById("image" + i);
-        imagesOriginalClassList[i] = imagesVisibile[i].className;
-    }
-}
-
-function addEventListenerToImages(){
-    for(let i = 0; i < 3; i++){
-        imagesVisibile[i].addEventListener("click", function(){ game(i); });
-    }
-}
-
-function displayHelpMessage() {
-    document.getElementById("helpMessage").classList.remove("no-visibility");
-}
-
-
-
-
-
+// resets page to original look
 function resetPage() {
-    if(played){
-        for(let i = 0; i < imagesOriginalClassList.length; i++){
-            imagesVisibile[i].className = imagesOriginalClassList[i];
-        }
-        messageParagraph.classList.add("no-visibility");
-        imagesVisibile[1].classList.remove("no-visibility");
-        
-        player1Panel.innerHTML = "Please choose one of the following:";
-        player2Panel.innerHTML = "&nbsp;";
-    }
+	for(let i = 0; i < imagesOriginalClassList.length; i++) {
+		imagesVisibile[i].className = imagesOriginalClassList[i];
+	}
+	
+	messageParagraph.classList.add('no-visibility');
+	imagesVisibile[1].classList.remove('no-visibility');
+
+	player1Panel.textContent = 'Please choose one of the following:';
+	player2Panel.textContent = '';
 }
 
-function resetGame(){
-    playerWinCount = 0;
-    computerWinCount = 0;
-    resetPage();
-    displayScore();
+// returns a random number to us as an index to get the computer's choice
+function getComputerPlay() {
+	return Math.floor(Math.random() * gameElements.length);
 }
 
+// removes middle image from visibility and writes winner message
+function displayWinnerMessage(message) {
+	const image1 = document.getElementById('image1');
+
+	image1.classList.add('no-visibility');
+	messageParagraph.innerHTML = `${message}<br><br><br> (Press any key to continue)`;
+	messageParagraph.classList.add('middle-panel');
+	messageParagraph.classList.remove('no-visibility');
+}
+
+// returns a string used as the winner message
+function getWinnerMessage(playerSelection, computerSelection) {
+
+	const winnerNumber = checkWinner(playerSelection, computerSelection);
+	let winnerMessage;
+
+	if(winnerNumber === 0) {
+		winnerMessage = 'Tie';
+	}else if(winnerNumber === 1) {
+		playerWinCount += 1;
+		winnerMessage = 'beats';
+	}else if(winnerNumber === 2) {
+		computerWinCount += 1;
+		winnerMessage = 'is beaten by';
+	}
+
+	return winnerMessage;
+}
+
+// saves the IDs of the images and their classes
+function saveImageObjects() {
+	for(let i = 0; i < 6; i++) {
+		imagesVisibile[i] = document.getElementById(`image${i}`);
+		imagesOriginalClassList[i] = imagesVisibile[i].className;
+	}
+}
+
+// adds the eventlisteners
+function addEventListeners() {
+	for(let i = 0; i < 3; i++) {
+		imagesVisibile[i].addEventListener('click', () => {
+			if(!played) {
+				game(i)
+			}
+		});
+	}
+
+	document.addEventListener('keydown', () => {	
+		if(played) {
+			played = false;
+			resetPage();
+		}
+	});
+	
+    resetButton.addEventListener('click', resetGame);
+}
+
+// arranges images to show what the player and computer picked
+function arrangeImages(playerSelection, computerSelection) {
+	imagesVisibile[0].classList.add('no-visibility');
+	imagesVisibile[2].classList.add('no-visibility');
+
+	player1Panel.textContent = 'Player 1 chose:';
+	player2Panel.textContent = 'Computer chose:';
+
+	if(playerSelection === computerSelection) {
+		computerSelection += 3;
+	}
+
+	imagesVisibile[playerSelection].className = 'left-panel fit';
+	imagesVisibile[computerSelection].className = 'right-panel fit';
+}
+
+// updates the score display
 function displayScore() {
-    scoreElement.innerHTML = `Score: You ${ playerWinCount }, Computer ${ computerWinCount }`;
+	scoreElement.textContent = `Score: You ${playerWinCount}, Computer ${computerWinCount}`;
 }
-
-function arrangeImages(playerSelection, computerSelection){
-    
-    imagesVisibile[0].classList.add("no-visibility");
-    imagesVisibile[2].classList.add("no-visibility");
-
-    
-
-    player1Panel.innerHTML = "Player 1 chose:";
-    player2Panel.innerHTML = "Computer chose:";
-    
-    if(playerSelection === computerSelection){
-        computerSelection += 3; 
-    }
-
-    imagesVisibile[playerSelection].className = 'left-panel fit';
-    imagesVisibile[computerSelection].className = 'right-panel fit';
-    
-}
-
-
 
 initializeGame();
