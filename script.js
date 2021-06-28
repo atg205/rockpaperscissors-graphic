@@ -4,7 +4,7 @@ let computerWinCount = 0;
 let scoreElement = document.getElementById("score");
 let imagesVisibile;
 
-let possibleGames = [()=game(0),()=game(1),()=game(2)];
+let possibleGames = [()=>game(0),()=>game(1),()=>game(2)];
 
 let imagesOriginalClassList;
 let messageParagraph;
