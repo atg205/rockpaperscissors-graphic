@@ -4,6 +4,8 @@ let computerWinCount = 0;
 let scoreElement = document.getElementById("score");
 let imagesVisibile;
 
+let possibleGames = [()=>game(0),()=>game(1),()=>game(2)];
+
 let imagesOriginalClassList;
 let messageParagraph;
 
@@ -36,7 +38,8 @@ function game(playerSelectionNumber){
 /*function removeEventListenerFromImages() not working! */
 function removeEventListenerFromImages(){
     for(let i = 0; i < 3; i++){
-        imagesVisibile[i].removeEventListener("click", function(){ game(i); });
+        imagesVisibile[i].classList.remove("choice");
+        imagesVisibile[i].removeEventListener("click",possibleGames[i]);
     }
 }
 
@@ -111,7 +114,8 @@ function saveImageObjects() {
 
 function addEventListenerToImages(){
     for(let i = 0; i < 3; i++){
-        imagesVisibile[i].addEventListener("click", function(){ game(i); });
+        imagesVisibile[i].classList.add("choice");
+        imagesVisibile[i].addEventListener("click",possibleGames[i]);
     }
 }
 
@@ -134,6 +138,7 @@ function resetPage() {
         player1Panel.innerHTML = "Please choose one of the following:";
         player2Panel.innerHTML = "&nbsp;";
     }
+    addEventListenerToImages();
 }
 
 function resetGame(){

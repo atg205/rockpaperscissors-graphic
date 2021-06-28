@@ -45,7 +45,7 @@ p {
     grid-area: player2; 
 }
 
-#score {;
+#score {
     grid-area: score;
     font-weight: bold;
     font-size: 30px;
@@ -61,7 +61,7 @@ p {
 .grid_center {
     place-self: center;
 }
-img:hover{
+.choice:hover{
     transform: scale(1.1,1.1);
     cursor: pointer;
 }
